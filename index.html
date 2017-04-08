@@ -19,6 +19,7 @@
     dataType:"json",
     type:"GET",
     success:function(ret){
+        console.log(ret);
          for(var i=0;i<ret.length;i++){
            if(ret[i].name===va){
              var cityCode=ret[i]._id.toString();
