@@ -1,0 +1,29 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+<div id="myDiv"><h2>这里显示返回的response</h2></div>
+<button id="b01" type="button">输入股票代码</button>
+<input id="ipt" value=""></input></button>
+<script>
+$(document).ready(function(){
+  $("#b01").click(function(){
+    var va = document.getElementById("ipt").value;
+    var txt = document.getElementById("ipt").value.toString();  
+    
+        $.ajax({
+    url:"//api.openweathermap.org/data/2.5/forecast?id=707860&APPID=32785e8acc22078c162ee8aedd2307e1",
+    dataType:"script",
+    cache:"false",
+    type:"GET",
+    success:function(res){
+$("#myDiv").html(res);
+        }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
