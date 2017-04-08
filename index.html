@@ -13,33 +13,22 @@
   $("#b01").click(function(){
     var va = document.getElementById("ipt").value;
     var txt = document.getElementById("ipt").value.toString();
-    
+    console.log(va);
         $.ajax({
-    url:"city.list.json",
+    url:"/city.list.json",
     dataType:"json",
     type:"GET",
     success:function(ret){
          for(var i=0;i<ret.length;i++){
            if(ret[i].name===va){
              var cityCode=ret[i]._id.toString();
-             getData();
+             console.log(cityCode);
            }//if
          }//for
         }//success
     });//ajax
   });
 
-function getData(){
-                 $.ajax({
-    url:"http://api.openweathermap.org/data/2.5/forecast?id="+cityCode+"&APPID=32785e8acc22078c162ee8aedd2307e1",
-    dataType:"json",
-    cache:"false",
-    type:"GET",
-    success:function(res){
-$("#myDiv").html(res);
-        }
-    });
-}
 
 });
 </script>
