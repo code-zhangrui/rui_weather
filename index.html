@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+<div id="myDiv"><h2>这里显示返回的response</h2></div>
+<button id="b01" type="button">输入股票代码</button>
+<input id="ipt" value=""></input></button>
+
+<script>
+  $(document).ready(function(){
+  $("#b01").click(function(){
+    var va = document.getElementById("ipt").value;
+    var txt = document.getElementById("ipt").value.toString();
+    
+        $.ajax({
+    url:"city.list.json",
+    dataType:"json",
+    type:"GET",
+    success:function(ret){
+         for(var i=0;i<ret.length;i++){
+           if(ret[i].name===va){
+             var cityCode=ret[i]._id.toString();
+             
+             $.ajax({
+    url:"http://api.openweathermap.org/data/2.5/forecast?id="+cityCode+"&APPID=32785e8acc22078c162ee8aedd2307e1",
+    dataType:"json",
+    cache:"false",
+    type:"GET",
+    success:function(res){
+$("#myDiv").html(res);
+        }
+    });
+             
+          
+           }//if
+         }//for
+        }//success
+    });//ajax
+    
+
+  });
+});
+</script>
+
+</body>
+</html>
