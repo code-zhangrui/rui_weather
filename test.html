@@ -20,6 +20,7 @@ $(document).ready(function(){
     success:function(res){
         console.log(res.cod);
         console.log(res);
+        $("#myDiv").html(JSON.stringify(res));
         }
     });
   });
