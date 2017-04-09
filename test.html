@@ -71,10 +71,20 @@ var chart = c3.generate({
            }//for-j
              //绘成图形
              chart.load({
+             data:{
              columns: [
              window['arr'+cityCode]
              ],
              type: 'spline'
+             },
+             axes:{
+               y:{
+                 label:{
+                   text:'摄氏度',
+                   position:'outer-middle'
+                 }
+               }
+             }
              });//chart.load
          cityCodes.push(cityCode);//储存城市号码
          console.log(window['arr'+cityCode])
@@ -136,7 +146,7 @@ var chart = c3.generate({
         columns: [
             window['arr'+cityCodes[i]]
         ],
-        type: 'scatter'
+        type: 'bar'
       })
       }
     })//b06
