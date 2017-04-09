@@ -83,9 +83,10 @@
     $("#b03").click(function(){
       console.log(allTemperatureArray)
       for(var i=0;i<allTemperatureArray.length;i++){
+        var haha=allTemperatureArray[i].slice(1,allTemperatureArray.length-1);
         chart.load({
         columns: [
-            allTemperatureArray[i]
+            haha
         ],
         type: 'area-step'
       })
