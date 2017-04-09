@@ -9,14 +9,12 @@
 <button id="b01" type="button">输入城市名字</button>
 <input id="ipt" value=""></input></button>
 <script>
-  $("#b01").click(function(){
-    var txt = document.getElementById("ipt").value.toLowerCase().split("");
-    console.log(txt);
-    txt[0]=txt[0].toUpperCase();
-    console.log(txt[0]);
-    txt=txt.join("");
-    console.log(txt);
-   })//click
+    $("#b01").click(function(){
+      chart.load({
+        type: 'area-step'
+
+      })
+    })
 
 </script>
 

@@ -35,6 +35,7 @@
 <div id="chart"></div>
 </body>
 <script>
+  var allTemperatureArray=[];
   $("#b01").click(function(){
     //让首字母大写
     var txt = document.getElementById("ipt").value.toString().toLowerCase().split("");
@@ -65,6 +66,7 @@
              window['arr'+cityCode]
              ]
              });//chart.load
+         allTemperatureArray.push(window['arr'+cityCode]);//放进去，改变显示风格时需要遍历出来
          }//success
      });//ajax            
     };//if
@@ -77,24 +79,32 @@
     })
    //步状图
     $("#b03").click(function(){
-      chart.load({
+      for(var i=0;i<allTemperatureArray.length;i++){
+        chart.load({
+        columns: [
+            allTemperatureArray[i]
+        ],
         type: 'area-step'
-
       })
-    })
+      }
+    })//b03
     //曲线图
     $("#b04").click(function(){
-      chart.load({
+      for(var i=0;i<allTemperatureArray.length;i++){
+        chart.load({
+        columns: [
+            allTemperatureArray[i]
+        ],
         type: 'spline'
-
       })
-    })
+      }
+    })//b03
 //初始可视化
 var chart = c3.generate({
     bindto: '#chart',
     data: {
       columns: [],
-      type: 'spline'
+      types: 'spline'
     }
 });
 </script>
