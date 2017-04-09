@@ -37,14 +37,43 @@
 </body>
 <script>
   //初始可视化
-var chart = c3.generate({
+$(document).ready(function(){
+  var cityCodes=[];//城市号码集
+  var cityCode=1808926;
+  //拿杭州数据
+      $.ajax({
+         url:"//api.openweathermap.org/data/2.5/forecast?id=1808926&APPID=32785e8acc22078c162ee8aedd2307e1",
+         dataType:"json",
+         cache:"false",
+         type:"GET",
+         success:function(res){
+         //填充数组
+         window['arr'+cityCode]=[];
+         window['arr'+cityCode].push('Hangzhou');
+           for(var j=0;j<res.list.length;j++){
+           window['arr'+cityCode].push((Math.floor(res.list[j].main.temp-273.15)*10)/10);//把开氏度换算成摄氏度
+           }//for-j
+             //绘成图形
+             chart.load({
+             columns: [
+             window['arr'+cityCode]
+             ],
+             type: 'spline'
+             });//chart.load
+         cityCodes.push(cityCode);//储存城市号码
+         }//success
+     });//ajax 
+
+  var chart = c3.generate({
     bindto: '#chart',
     data: {
       columns: [],
-      type: 'spline'//坑爹啊！！这里不能写成type，搞了我3个小时
+      type: 'spline'//坑爹啊！！这里不能写成types，搞了我3个小时
     }
-});
-  var cityCodes=[];//城市号码集
+  });
+});//ready
+
+
   $("#b01").click(function(){
     //让首字母大写
     var txt = document.getElementById("ipt").value.toString().toLowerCase().split("");
@@ -63,7 +92,7 @@ var chart = c3.generate({
          success:function(res){
          //  $("#myDiv").html(JSON.stringify(res));
          //填充数组
-         var cityCodeString=String(cityCode);
+         //  var cityCodeString=String(cityCode);
          window['arr'+cityCode]=[];
          window['arr'+cityCode].push(txt);
            for(var j=0;j<res.list.length;j++){
@@ -71,33 +100,12 @@ var chart = c3.generate({
            }//for-j
              //绘成图形
              chart.load({
-            //  data:{
              columns: [
              window['arr'+cityCode]
              ],
              type: 'spline'
-            //  }
-            //  axis:{
-            //    y:{
-            //      show:true,
-            //      label:{
-            //        text:'摄氏度',
-            //        position:'outer-middle'
-            //      }
-            //    }
-            //   //  y2:{
-            //   //    show:true,
-            //   //    label:{
-            //   //      text:'摄氏度',
-            //   //      position:'outer-middle'
-            //   //    }
-            //   //  }
-            //  }
-            
              });//chart.load
          cityCodes.push(cityCode);//储存城市号码
-         console.log(window['arr'+cityCode])
-         console.log(cityCodes)
          }//success
      });//ajax            
     };//if
@@ -110,7 +118,6 @@ var chart = c3.generate({
     })
    //面积步状图
     $("#b03").click(function(){
-      console.log(cityCodes)
       for(var i=0;i<cityCodes.length;i++){
         chart.load({
         columns: [
@@ -123,7 +130,6 @@ var chart = c3.generate({
             
     //曲线图
     $("#b04").click(function(){
-      console.log(cityCodes)
       for(var i=0;i<cityCodes.length;i++){
         chart.load({
         columns: [
@@ -136,7 +142,6 @@ var chart = c3.generate({
 
     //点状图
     $("#b05").click(function(){
-      console.log(cityCodes)
       for(var i=0;i<cityCodes.length;i++){
         chart.load({
         columns: [
@@ -149,7 +154,6 @@ var chart = c3.generate({
 
         //柱状图
     $("#b06").click(function(){
-      console.log(cityCodes)
       for(var i=0;i<cityCodes.length;i++){
         chart.load({
         columns: [
@@ -162,7 +166,6 @@ var chart = c3.generate({
 
     //面积曲线图
     $("#b07").click(function(){
-      console.log(cityCodes)
       for(var i=0;i<cityCodes.length;i++){
         chart.load({
         columns: [
