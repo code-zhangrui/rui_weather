@@ -43,7 +43,15 @@
     data: {
       columns: [],
       type: 'spline'//坑爹啊！！这里不能写成types，搞了我3个小时
-    }
+    },
+     axis: {
+      y: {
+        label: {
+          text: 'Y Label',
+          position: 'outer-middle'
+        },
+      }
+    }//axis
   });
   var cityCodes=[];//城市号码集
   //拿杭州数据
@@ -178,8 +186,8 @@
 
     //测试按钮
     $("#b08").click(function(){
-    chart.axis.labels({y: 'New Y Axis Label'});
-    chart.axis.labels({position: 'outer-middle'});
+    chart.axis.labels({y: '摄氏度'});
+    chart.axis.labels({position: 'outer-middle'});//无效
 })
   
 
