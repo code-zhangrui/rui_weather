@@ -37,8 +37,17 @@
 </body>
 <script>
   //初始可视化
-$(document).ready(function(){
+    var chart = c3.generate({
+    bindto: '#chart',
+    data: {
+      columns: [],
+      type: 'spline'//坑爹啊！！这里不能写成types，搞了我3个小时
+    }
+  });
   var cityCodes=[];//城市号码集
+  //拿杭州数据
+  
+$(document).ready(function(){
   var cityCode=1808926;
   //拿杭州数据
       $.ajax({
@@ -63,14 +72,6 @@ $(document).ready(function(){
          cityCodes.push(cityCode);//储存城市号码
          }//success
      });//ajax 
-
-  var chart = c3.generate({
-    bindto: '#chart',
-    data: {
-      columns: [],
-      type: 'spline'//坑爹啊！！这里不能写成types，搞了我3个小时
-    }
-  });
 });//ready
 
 
