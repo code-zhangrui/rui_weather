@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="lib/jquery-3.2.0.min.js"></script>
+<script src="lib/city.list.json"></script>
 </head>
 <body>
 <div id="myDiv"><h2>这里显示返回的response</h2></div>
@@ -11,27 +12,28 @@
 <script>
   $(document).ready(function(){
   $("#b01").click(function(){
-    var va = document.getElementById("ipt").value;
     var txt = document.getElementById("ipt").value.toString();
-    console.log(va);
-        $.ajax({
-    url:"lib/city.list.json",
-    dataType:"json",
-    type:"GET",
-    success:function(ret){
-        console.log(ret);
-         for(var i=0;i<ret.length;i++){
-           if(ret[i].name===va){
-             var cityCode=ret[i]._id.toString();
-             console.log(cityCode);
-           }//if
-         }//for
-        }//success
+         for(var i=0;i<cityList.length;i++){
+           if(cityList[i].name===txt){
+             var cityCode=cityList[i]._id;
+             console.log('我是cityCode'+cityCode);
+
+     $.ajax({
+         url:"//api.openweathermap.org/data/2.5/forecast?id="+cityCode+"&APPID=32785e8acc22078c162ee8aedd2307e1",
+         dataType:"json",
+         cache:"false",
+         type:"GET",
+         success:function(res){
+         console.log('我是res.cod'+res.cod);
+         console.log('我是res'+res);
+         $("#myDiv").html(JSON.stringify(res));
+         }
     });//ajax
-  });
 
-
-});
+           };
+         };
+   })
+  })
 </script>
 
 </body>
