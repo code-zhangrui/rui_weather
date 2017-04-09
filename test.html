@@ -72,7 +72,8 @@ var chart = c3.generate({
              chart.load({
              columns: [
              window['arr'+cityCode]
-             ]
+             ],
+             type: 'area-step'
              });//chart.load
          cityCodes.push(cityCode);//储存城市号码
          console.log(window['arr'+cityCode])
