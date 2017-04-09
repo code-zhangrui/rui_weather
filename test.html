@@ -38,7 +38,7 @@
     //让首字母大写
     var txt = document.getElementById("ipt").value.toString().toLowerCase().split("");
     txt[0].toUpperCase();
-    txt=txt.join(" ");
+    txt=txt.join("");
     //翻本地json
          for(var i=0;i<cityList.length;i++){
            if(cityList[i].name===txt){
@@ -56,7 +56,7 @@
          window['arr'+cityCode]=[];
          window['arr'+cityCode].push(txt);
            for(var j=0;j<res.list.length;j++){
-           window['arr'+cityCode].push((res.list[j].main.temp-273.15));//把开氏度换算成摄氏度
+           window['arr'+cityCode].push((Math.floor(res.list[j].main.temp-273.15)*10)/10);//把开氏度换算成摄氏度
            }//for-j
              //绘成图形
              chart.load({
