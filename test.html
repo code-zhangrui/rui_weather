@@ -67,6 +67,8 @@
              ]
              });//chart.load
          allTemperatureArray.push(window['arr'+cityCode]);//放进去，改变显示风格时需要遍历出来
+         console.log(window['arr'+cityCode])
+         console.log(allTemperatureArray)
          }//success
      });//ajax            
     };//if
@@ -79,6 +81,7 @@
     })
    //步状图
     $("#b03").click(function(){
+      console.log(allTemperatureArray)
       for(var i=0;i<allTemperatureArray.length;i++){
         chart.load({
         columns: [
@@ -90,6 +93,7 @@
     })//b03
     //曲线图
     $("#b04").click(function(){
+      console.log(allTemperatureArray)
       for(var i=0;i<allTemperatureArray.length;i++){
         chart.load({
         columns: [
