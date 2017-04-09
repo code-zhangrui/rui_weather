@@ -8,36 +8,28 @@
 <div id="myDiv"><h2>这里显示返回的response</h2></div>
 <button id="b01" type="button">输入城市名字</button>
 <input id="ipt" value=""></input></button>
-
 <script>
-  $(document).ready(function(){
+  // $(document).ready(function(){
   $("#b01").click(function(){
     var txt = document.getElementById("ipt").value.toString();
          for(var i=0;i<cityList.length;i++){
            if(cityList[i].name===txt){
              var cityCode=cityList[i]._id;
-             console.log('我是cityCode'+cityCode);
 
      $.ajax({
-         url:"//api.openweathermap.org/data/2.5/forecast?id="+cityCode+"&APPID=32785e8acc22078c162ee8aedd2307e1&lang=zh_cn",
+         url:"//api.openweathermap.org/data/2.5/forecast?id="+cityCode+"&APPID=32785e8acc22078c162ee8aedd2307e1",
          dataType:"json",
          cache:"false",
          type:"GET",
          success:function(res){
-         console.log('我是res.cod'+res.cod);
-         console.log('我是res.list'+res.list);
-         console.log('我是res.list[0]'+res.list[0]);
-         console.log('我是res.list[1]'+res.list[1]);
-         console.log('我是res.list的长度'+res.list.length);
-         console.log('我是res.city.country'+res.city.country);
          $("#myDiv").html(JSON.stringify(res));
          }
     });//ajax
 
            };
          };
-   })
-  })
+   })//click
+  // })
 </script>
 
 </body>
