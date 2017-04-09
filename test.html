@@ -35,6 +35,14 @@
 <div id="chart"></div>
 </body>
 <script>
+  //初始可视化
+var chart = c3.generate({
+    bindto: '#chart',
+    data: {
+      columns: [],
+      types: 'spline'
+    }
+});
   var cityCodes=[];//城市号码集
   $("#b01").click(function(){
     //让首字母大写
@@ -105,13 +113,6 @@
 
       })
     })
-//初始可视化
-var chart = c3.generate({
-    bindto: '#chart',
-    data: {
-      columns: [],
-      types: 'spline'
-    }
-});
+
 </script>
 </html>
