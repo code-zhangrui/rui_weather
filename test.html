@@ -30,7 +30,8 @@
 <body>
 <div id="nav">  
 <button id="b01" type="button">输入城市名字</button><input id="ipt" placeholder="这里输入城市拼音/英文"></input></button>
-<button id="b02" type="button">清空</button><button id="b03" type="button">步状图</button><button id="b04" type="button">曲线图</button>
+<button id="b02" type="button">清空</button><button id="b03" type="button">面积步状图</button><button id="b04" type="button">曲线图</button>
+<button id="b05" type="button">点状图</button><button id="b06" type="button">柱状图</button><button id="b07" type="button">面积曲线图</button>
 </div>
 <div id="chart"></div>
 </body>
@@ -40,7 +41,7 @@ var chart = c3.generate({
     bindto: '#chart',
     data: {
       columns: [],
-      type: 'spline'
+      type: 'spline'//坑爹啊！！这里不能写成type，搞了我3个小时
     }
 });
   var cityCodes=[];//城市号码集
@@ -73,7 +74,7 @@ var chart = c3.generate({
              columns: [
              window['arr'+cityCode]
              ],
-             type: 'area-step'
+             type: 'spline'
              });//chart.load
          cityCodes.push(cityCode);//储存城市号码
          console.log(window['arr'+cityCode])
@@ -88,32 +89,70 @@ var chart = c3.generate({
     $("#b02").click(function(){
       chart.unload();
     })
-   //步状图
+   //面积步状图
     $("#b03").click(function(){
       console.log(cityCodes)
-      for(var i1=0;i1<cityCodes.length;i1++){
+      for(var i=0;i<cityCodes.length;i++){
         chart.load({
         columns: [
-            arr1816670
+            window['arr'+cityCodes[i]]
         ],
         type: 'area-step'
       })
       }
     })//b03
             
-    //测试
-  var bbb=["杭州", 133, 1203, 1103, 1403, 1153, 1253];//在外面定义数组
-  var allArr=[];
-  allArr.push(bbb);
+    //曲线图
     $("#b04").click(function(){
-      chart.load({
+      console.log(cityCodes)
+      for(var i=0;i<cityCodes.length;i++){
+        chart.load({
         columns: [
-            allArr[0]
+            window['arr'+cityCodes[i]]
         ],
-        type: 'area-step'
-
+        type: 'spline'
       })
-    })
+      }
+    })//b04
+
+    //点状图
+    $("#b05").click(function(){
+      console.log(cityCodes)
+      for(var i=0;i<cityCodes.length;i++){
+        chart.load({
+        columns: [
+            window['arr'+cityCodes[i]]
+        ],
+        type: 'scatter'
+      })
+      }
+    })//b05
+
+        //柱状图
+    $("#b06").click(function(){
+      console.log(cityCodes)
+      for(var i=0;i<cityCodes.length;i++){
+        chart.load({
+        columns: [
+            window['arr'+cityCodes[i]]
+        ],
+        type: 'scatter'
+      })
+      }
+    })//b06
+
+    //面积曲线图
+    $("#b07").click(function(){
+      console.log(cityCodes)
+      for(var i=0;i<cityCodes.length;i++){
+        chart.load({
+        columns: [
+            window['arr'+cityCodes[i]]
+        ],
+        type: 'area-spline'
+      })
+      }
+    })//b07
 
 </script>
 </html>
