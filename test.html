@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>c3demo1</title>
+    <title>天气数据可视化</title>
 <script src="lib/jquery-3.2.0.min.js"></script>
 <script src="lib/city.list.json"></script>
     <!-- Load c3.css -->
@@ -29,7 +29,7 @@
 </head>
 <body>
 <div id="nav">  
-<button id="b01" type="button">输入城市名字</button><input id="ipt" value=""></input></button><button id="b02" type="button">清空</button>
+<button id="b01" type="button">输入城市名字</button><input id="ipt" style="text-transform:capitalize"></input></button><button id="b02" type="button">清空</button>
 </div>
 <div id="chart"></div>
 </body>
@@ -51,9 +51,9 @@
          //填充数组
          var cityCodeString=String(cityCode);
          window['arr'+cityCode]=[];
-         window['arr'+cityCode].push("我是"+cityCodeString);
+         window['arr'+cityCode].push(txt);
            for(var j=0;j<res.list.length;j++){
-           window['arr'+cityCode].push(res.list[j].main.temp);
+           window['arr'+cityCode].push((res.list[j].main.temp-273.15));//把开氏度换算成摄氏度
            }//for-j
              //绘成图形
              chart.load({
