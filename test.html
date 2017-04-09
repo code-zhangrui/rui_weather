@@ -32,6 +32,7 @@
 <button id="b01" type="button">输入城市名字</button><input id="ipt" placeholder="这里输入城市拼音/英文"></input></button>
 <button id="b02" type="button">清空</button><button id="b03" type="button">面积步状图</button><button id="b04" type="button">曲线图</button>
 <button id="b05" type="button">点状图</button><button id="b06" type="button">柱状图</button><button id="b07" type="button">面积曲线图</button>
+<button id="b08" type="button">测试按钮</button>
 </div>
 <div id="chart"></div>
 </body>
@@ -60,22 +61,12 @@
            window['arr'+cityCode].push((Math.floor(res.list[j].main.temp-273.15)*10)/10);//把开氏度换算成摄氏度
            }//for-j
             //  //绘成图形
-            //  chart.load({
-            //  columns: [
-            //  window['arr'+cityCode]
-            //  ],
-            //  type: 'spline'
-            //  });//chart.load
-              //初始可视化
-    var chart = c3.generate({
-    bindto: '#chart',
-    data: {
-      columns: [
-         window['arr'+cityCode]
-      ],
-      type: 'spline'//坑爹啊！！这里不能写成types，搞了我3个小时
-    }
-  });//初始可视化
+             chart.load({
+             columns: [
+             window['arr'+cityCode]
+             ],
+             type: 'spline'
+             });//chart.load
          cityCodes.push(cityCode);//储存城市号码
          }//success
      });//ajax 
@@ -184,6 +175,12 @@
       })
       }
     })//b07
+
+    //测试按钮
+    $("#b08").click(function(){
+    chart.axis.labels({y: 'New Y Axis Label', y2: 'New Y2 Axis Label Again'});
+})
+  
 
 </script>
 </html>
