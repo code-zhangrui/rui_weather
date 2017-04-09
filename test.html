@@ -85,7 +85,7 @@
       for(var i1=0;i1<cityCodes.length;i1++){
         chart.load({
         columns: [
-            window['arr'+cityCode[i1]]
+            window['arr'+cityCodes[i1]]
         ],
         type: 'area-step'
       })
@@ -97,7 +97,7 @@
       for(var i2=0;i2<cityCodes.length;i2++){
         chart.load({
         columns: [
-            window['arr'+cityCode[i2]]
+            window['arr'+cityCodes[i2]]
         ],
         type: 'spline'
       })
