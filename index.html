@@ -10,8 +10,10 @@
 <input id="ipt" value=""></input></button>
 <script>
   $("#b01").click(function(){
-    var txt = document.getElementById("ipt").value.toString().toLowerCase().split("");
-    txt[0].toUpperCase();
+    var txt = document.getElementById("ipt").value.toLowerCase().split("");
+    console.log(txt);
+    txt[0]=txt[0].toUpperCase();
+    console.log(txt[0]);
     txt=txt.join("");
     console.log(txt);
    })//click

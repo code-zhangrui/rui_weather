@@ -29,7 +29,8 @@
 </head>
 <body>
 <div id="nav">  
-<button id="b01" type="button">输入城市名字</button><input id="ipt" placeholder="这里输入城市拼音/英文"></input></button><button id="b02" type="button">清空</button>
+<button id="b01" type="button">输入城市名字</button><input id="ipt" placeholder="这里输入城市拼音/英文"></input></button>
+<button id="b02" type="button">清空</button><button id="b03" type="button">步状图</button><button id="b04" type="button">曲线图</button>
 </div>
 <div id="chart"></div>
 </body>
@@ -37,7 +38,7 @@
   $("#b01").click(function(){
     //让首字母大写
     var txt = document.getElementById("ipt").value.toString().toLowerCase().split("");
-    txt[0].toUpperCase();
+    txt[0]=txt[0].toUpperCase();
     txt=txt.join("");
     //翻本地json
          for(var i=0;i<cityList.length;i++){
@@ -74,7 +75,20 @@
     $("#b02").click(function(){
       chart.unload();
     })
+   //步状图
+    $("#b03").click(function(){
+      chart.load({
+        type: 'area-step'
 
+      })
+    })
+    //曲线图
+    $("#b04").click(function(){
+      chart.load({
+        type: 'spline'
+
+      })
+    })
 //初始可视化
 var chart = c3.generate({
     bindto: '#chart',
