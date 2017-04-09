@@ -91,18 +91,20 @@
       })
       }
     })//b03
-    //曲线图
+            
+    //测试
+  var bbb=["杭州", 133, 1203, 1103, 1403, 1153, 1253];//在外面定义数组
+  var allArr=[];
+  allArr.push(bbb);
     $("#b04").click(function(){
-      console.log(cityCodes)
-      for(var i2=0;i2<cityCodes.length;i2++){
-        chart.load({
+      chart.load({
         columns: [
-            window['arr'+cityCodes[i2]]
+            allArr[0]
         ],
-        type: 'spline'
+        type: 'area-step'
+
       })
-      }
-    })//b04
+    })
 //初始可视化
 var chart = c3.generate({
     bindto: '#chart',
