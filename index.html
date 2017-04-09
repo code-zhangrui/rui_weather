@@ -25,7 +25,11 @@
          type:"GET",
          success:function(res){
          console.log('我是res.cod'+res.cod);
-         console.log('我是res'+res);
+         console.log('我是res.list'+res.list);
+         console.log('我是res.list[0]'+res.list[0]);
+         console.log('我是res.list[1]'+res.list[1]);
+         console.log('我是res.list的最后一项'+res.list[list.length-1]);
+         console.log('我是res.city'+res.city);
          $("#myDiv").html(JSON.stringify(res));
          }
     });//ajax
