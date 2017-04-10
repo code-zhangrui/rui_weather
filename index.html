@@ -21,7 +21,7 @@
 #nav{
   height:100px;
   width: 100%;
-  background: rgba(78, 172, 206,0.8);
+  background: rgba(169, 222, 242,0.8);
   color:white;
   position: fixed;
   top:0;
@@ -91,7 +91,7 @@ a:hover{
 <body>
 <div id="box">
 <div id="nav">  
-<button id="b01" type="button">确定</button><input id="ipt" placeholder="这里输入城市拼音/英文，不要有空格"></input>
+<button id="b01" type="button">添加</button><input id="ipt" placeholder="这里输入城市拼音/英文，不要有空格"></input>
 <button id="b04" type="button">曲线图</button><button id="b06" type="button">柱状图</button>
 <button id="b05" type="button">点状图</button><button id="b03" type="button">块状图</button><button id="b07" type="button">块状曲线图</button>
 <button id="b08" type="button">测试按钮</button><button id="b02" type="button">清空</button>
@@ -179,7 +179,10 @@ a:hover{
              type: 'spline'
              });//chart.load
          cityCodes.push(cityCode);//储存城市号码
-         }//success
+        },//success
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("不存在这个城市，请检查拼写！"); 
+   },
      });//ajax            
     };//if
    };//for-i
