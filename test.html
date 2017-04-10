@@ -32,11 +32,39 @@
 <button id="b01" type="button">输入城市名字</button><input id="ipt" placeholder="这里输入城市拼音/英文"></input></button>
 <button id="b02" type="button">清空</button><button id="b03" type="button">面积步状图</button><button id="b04" type="button">曲线图</button>
 <button id="b05" type="button">点状图</button><button id="b06" type="button">柱状图</button><button id="b07" type="button">面积曲线图</button>
-<button id="b08" type="button">测试按钮</button>
+<button id="b08" type="button">测试按钮</button><button id="b00" type="button">测试按钮</button>
 </div>
 <div id="chart"></div>
 </body>
 <script>
+//试验田
+  var axis_x_localtime;
+      var data1 = {
+          x : 'date',
+          columns: [
+            ['date', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05'],
+            ['sample', 30, 200, 100, 400, 150],
+            ['sample2', 130, 300, 200, 450, 250]
+          ]
+      };
+
+    $("#b00").click(function(){
+        return c3.generate({
+        bindto: '#chart',
+
+        axis: {  
+         y: {
+         label: {
+          text: '测试度',
+          position: 'outer-middle'
+          },
+        }
+      }//axis
+
+      }); 
+    })
+   
+
   //初始可视化
     var chart = c3.generate({
     bindto: '#chart',
@@ -47,7 +75,7 @@
      axis: {
       y: {
         label: {
-          text: 'Y Label',
+          text: '摄氏度',
           position: 'outer-middle'
         },
       }
@@ -186,8 +214,16 @@
 
     //测试按钮
     $("#b08").click(function(){
-    chart.axis.labels({y: '摄氏度'});
-    chart.axis.labels({position: 'outer-middle'});//无效
+    // chart.axis.labels({y: '摄氏度'});//有效
+    // chart.axis.labels({position: 'outer-middle'});//无效
+    chart = c3.generate({
+          data: {
+            columns: columns,
+          },
+          legend: {
+            show: false
+          }
+        });
 })
   
 
