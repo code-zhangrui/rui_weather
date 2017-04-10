@@ -154,7 +154,9 @@ a:hover{
     txt=txt.join("");
     //翻本地json
          for(var i in cityList){
-           if(cityList[i].name===txt){
+           if(!cityList[i].name===txt){
+              alert("不存在此城市，请注意拼写！");
+           }else{
              var cityCode=cityList[i]._id;
     //ajax拿数据
     $.ajax({
@@ -181,10 +183,7 @@ a:hover{
          cityCodes.push(cityCode);//储存城市号码
         }//success
      });//ajax            
-    }else if(cityList.indexOf(txt)===-1){
-      alert("不存在此城市，请注意拼写！");
-      return;
-      };
+    };
    };//for-i 
   })//click
 
