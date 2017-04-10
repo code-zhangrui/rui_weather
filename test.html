@@ -32,7 +32,7 @@
 <button id="b01" type="button">输入城市名字</button><input id="ipt" placeholder="这里输入城市拼音/英文"></input></button>
 <button id="b02" type="button">清空</button><button id="b03" type="button">面积步状图</button><button id="b04" type="button">曲线图</button>
 <button id="b05" type="button">点状图</button><button id="b06" type="button">柱状图</button><button id="b07" type="button">面积曲线图</button>
-<button id="b08" type="button">测试按钮</button><button id="b00" type="button">测试按钮</button>
+<button id="b08" type="button">测试按钮1</button><button id="b00" type="button">测试按钮2</button>
 </div>
 <div id="chart"></div>
 </body>
@@ -51,7 +51,7 @@
     $("#b00").click(function(){
         return c3.generate({
         bindto: '#chart',
-
+        columns:columns,
         axis: {  
          y: {
          label: {
