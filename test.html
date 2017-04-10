@@ -60,7 +60,6 @@
           },
         }
       }//axis
-
       }); 
     })
    
@@ -77,8 +76,13 @@
         label: {
           text: '摄氏度',
           position: 'outer-middle'
-        },
-      }
+        },//label
+        type : 'timeseries',
+            tick : {
+              format : "%Y-%m-%d %H:%M:%S" // https://github.com/mbostock/d3/wiki/Time-Formatting#wiki-format
+            },
+            localtime: axis_x_localtime
+      }//y
     }//axis
   });
   var cityCodes=[];//城市号码集
@@ -106,8 +110,6 @@
          cityCodes.push(cityCode);//储存城市号码
          }//success
      });//ajax 
-// });//ready
-
 
   $("#b01").click(function(){
     //让首字母大写
@@ -214,16 +216,8 @@
 
     //测试按钮
     $("#b08").click(function(){
-    // chart.axis.labels({y: '摄氏度'});//有效
+    chart.axis.labels({y: '摄氏度'});//有效
     // chart.axis.labels({position: 'outer-middle'});//无效
-    chart = c3.generate({
-          data: {
-            columns: columns,
-          },
-          legend: {
-            show: false
-          }
-        });
 })
   
 
