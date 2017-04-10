@@ -154,6 +154,10 @@ a:hover{
     txt=txt.join("");
     //翻本地json
          for(var i in cityList){
+           if(!cityList[i].name===txt){
+             alert("不存在此城市，请注意拼写！");
+             return;
+           };
            if(cityList[i].name===txt){
              var cityCode=cityList[i]._id;
     //ajax拿数据
