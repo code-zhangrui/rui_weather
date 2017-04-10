@@ -109,20 +109,10 @@ a:hover{
     var chart = c3.generate({
     bindto: '#chart',
     data: {
-      x: 'x',//++++++++++++++++++++++++++++++
-      columns: [
-        ['x', '2010-01-01', '2011-01-01', '2012-01-01', '2013-01-01', '2014-01-01', '2015-01-01'],
-      ],
+      columns: [],
       type: 'spline'//坑爹啊！！这里不能写成types，搞了我3个小时
     },
      axis: {
-      x:{
-        type:'timeseries',
-        tick:{
-          format:function(x){return x.getFullYear(); 
-          }
-        }
-      },//x
       y: {
         label: {
           text: '摄氏度',
