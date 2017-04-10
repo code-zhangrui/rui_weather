@@ -109,10 +109,20 @@ a:hover{
     var chart = c3.generate({
     bindto: '#chart',
     data: {
-      columns: [],
+      x: 'x',//++++++++++++++++++++++++++++++
+      columns: [
+        ['x', '2010-01-01', '2011-01-01', '2012-01-01', '2013-01-01', '2014-01-01', '2015-01-01'],
+      ],
       type: 'spline'//坑爹啊！！这里不能写成types，搞了我3个小时
     },
      axis: {
+      x:{
+        type:'timeseries',
+        tick:{
+          format:function(x){return x.getFullYear(); 
+          }
+        }
+      },//x
       y: {
         label: {
           text: '摄氏度',
@@ -136,7 +146,7 @@ a:hover{
            for(var j=0;j<res.list.length;j++){
            window['arr'+cityCode].push((Math.floor(res.list[j].main.temp-273.15)*10)/10);//把开氏度换算成摄氏度
            }//for-j
-            //  //绘成图形
+            //绘成图形
              chart.load({
              columns: [
              window['arr'+cityCode]
@@ -181,7 +191,7 @@ a:hover{
          cityCodes.push(cityCode);//储存城市号码
         }//success
      });//ajax            
-    };
+    };//if
    };//for-i 
   })//click
 
@@ -255,6 +265,6 @@ a:hover{
     // chart.axis.labels({y: '摄氏度'});//有效
     // chart.axis.labels({position: 'outer-middle'});//无效
     chart.transform('line');
-})
+})//b08
 </script>
 </html>
