@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>张睿的天气数据分析系统</title>
+    <title>张睿的天气数据比对系统</title>
 <script src="lib/jquery-3.2.0.min.js"></script>
 <script src="lib/city.list.json"></script>
     <!-- Load c3.css -->
@@ -69,7 +69,7 @@ color: rgb(78, 172, 206);
   margin-top:120px;
   width: 900px;
   min-height:400px;
-  background: rgba(169, 222, 242,0.8);
+  background: rgba(179, 225, 242,0.8);
   border-radius: 1px;
 }
 #footer{
@@ -94,7 +94,7 @@ a:hover{
 <button id="b01" type="button">添加</button><input id="ipt" placeholder="这里输入城市拼音/英文，不要有空格"></input>
 <button id="b04" type="button">曲线图</button><button id="b06" type="button">柱状图</button>
 <button id="b05" type="button">点状图</button><button id="b03" type="button">块状图</button><button id="b07" type="button">块状曲线图</button>
-<button id="b08" type="button">测试按钮</button><button id="b02" type="button">清空</button>
+<button id="b08" type="button">折线图</button><button id="b02" type="button">清空</button>
 </div>
 <div id="chart"></div>
 </div>
@@ -179,12 +179,12 @@ a:hover{
              type: 'spline'
              });//chart.load
          cityCodes.push(cityCode);//储存城市号码
-        },//success
-        error: function() {
-            alert("不存在这个城市，请检查拼写！"); 
-        },
+        }//success
      });//ajax            
     };//if
+    if(cityList.indexOf(txt)===-1){
+      alert("不存在此城市，请注意拼写！")
+    };
    };//for-i
   })//click
 
@@ -253,10 +253,11 @@ a:hover{
       }
     })//b07
 
-    //测试按钮
+    //折线图
     $("#b08").click(function(){
-    chart.axis.labels({y: '摄氏度'});//有效
+    // chart.axis.labels({y: '摄氏度'});//有效
     // chart.axis.labels({position: 'outer-middle'});//无效
+    chart.transform('line');
 })
 </script>
 </html>
