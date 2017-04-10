@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>天气数据可视化</title>
+    <title>张睿的天气数据分析系统</title>
 <script src="lib/jquery-3.2.0.min.js"></script>
 <script src="lib/city.list.json"></script>
     <!-- Load c3.css -->
@@ -11,59 +11,100 @@
 <script src="lib/d3/d3.min.js" charset="utf-8"></script>
 <script src="lib/c3-0.4.11/c3-0.4.11/c3.min.js"></script>
 <style>
+  body{
+  background: url('http://scromy.com/wp-content/uploads/2017/01/anime-scenery-rain-wallpaper-desktop-background.jpg');
+  background-size: cover;
+  }
+  #box{
+    display: flex;
+  }
 #nav{
-  height:80px;
+  height:100px;
   width: 100%;
-  background: orange;
+  background: rgba(78, 172, 206,0.8);
   color:white;
   position: fixed;
   top:0;
   left:0;
   z-index: 1;
+  display: flex;
 }
+button{
+  flex:1; 
+  background: rgba(255, 255, 255,0.1);
+  color:white;
+  border:none;
+  border-right:1px solid white;
+  font-size:14px;
+  cursor:pointer;
+}
+button:hover{
+  background: red;
+}
+#b02{
+  border-right:none;
+}
+#ipt{
+  border:none;
+}
+#ipt{
+  flex:7; 
+  border-left:none;
+  color:rgb(78, 172, 206);
+}
+::-webkit-input-placeholder { /* WebKit browsers */ 
+color: rgb(78, 172, 206);
+} 
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ 
+color: rgb(78, 172, 206);
+} 
+::-moz-placeholder { /* Mozilla Firefox 19+ */ 
+color: rgb(78, 172, 206);
+} 
+:-ms-input-placeholder { /* Internet Explorer 10+ */ 
+color: rgb(78, 172, 206);
+} 
 #chart{
-  margin-top:80px;
-  background: #fff2e3;
+  margin: auto; 
+  margin-top:120px;
+  width: 900px;
+  min-height:400px;
+  background: rgba(100, 200, 234,0.8);
+  border-radius: 1px;
+}
+#footer{
+  text-align: center;
+}
+.info{
+  color:white;
+  margin:20px;
+}
+a{
+  color:white;
+  text-decoration: none; 
+}
+a:hover{
+  color:rgb(100, 200, 234);
 }
 </style>
 </head>
 <body>
+<div id="box">
 <div id="nav">  
-<button id="b01" type="button">输入城市名字</button><input id="ipt" placeholder="这里输入城市拼音/英文"></input></button>
-<button id="b02" type="button">清空</button><button id="b03" type="button">面积步状图</button><button id="b04" type="button">曲线图</button>
-<button id="b05" type="button">点状图</button><button id="b06" type="button">柱状图</button><button id="b07" type="button">面积曲线图</button>
-<button id="b08" type="button">测试按钮1</button><button id="b00" type="button">测试按钮2</button>
+<button id="b01" type="button">确定</button><input id="ipt" placeholder="这里输入城市拼音/英文，不要有空格"></input>
+<button id="b04" type="button">曲线图</button><button id="b06" type="button">柱状图</button>
+<button id="b05" type="button">点状图</button><button id="b03" type="button">块状图</button><button id="b07" type="button">块状曲线图</button>
+<button id="b08" type="button">测试按钮</button><button id="b02" type="button">清空</button>
 </div>
 <div id="chart"></div>
+</div>
+<div id="footer">
+  <div class="info">
+    <a href="https://github.com/code-zhangrui" alt="">https://github.com/code-zhangrui</a>
+</div>
+  </div>
 </body>
 <script>
-//试验田
-  var axis_x_localtime;
-      var data1 = {
-          x : 'date',
-          columns: [
-            ['date', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05'],
-            ['sample', 30, 200, 100, 400, 150],
-            ['sample2', 130, 300, 200, 450, 250]
-          ]
-      };
-
-    $("#b00").click(function(){
-        return c3.generate({
-        bindto: '#chart',
-        columns:columns,
-        axis: {  
-         y: {
-         label: {
-          text: '测试度',
-          position: 'outer-middle'
-          },
-        }
-      }//axis
-      }); 
-    })
-   
-
   //初始可视化
     var chart = c3.generate({
     bindto: '#chart',
@@ -76,150 +117,143 @@
         label: {
           text: '摄氏度',
           position: 'outer-middle'
-        },//label
-        type : 'timeseries',
-            tick : {
-              format : "%Y-%m-%d %H:%M:%S" // https://github.com/mbostock/d3/wiki/Time-Formatting#wiki-format
-            },
-            localtime: axis_x_localtime
+        }//label
       }//y
     }//axis
   });
   var cityCodes=[];//城市号码集
   //拿杭州数据
-  var cityCode=1808926;
-      $.ajax({
-         url:"//api.openweathermap.org/data/2.5/forecast?id=1808926&APPID=32785e8acc22078c162ee8aedd2307e1",
-         dataType:"json",
-         cache:"false",
-         type:"GET",
-         success:function(res){
-         //填充数组
-         window['arr'+cityCode]=[];
-         window['arr'+cityCode].push('Hangzhou');
-           for(var j=0;j<res.list.length;j++){
-           window['arr'+cityCode].push((Math.floor(res.list[j].main.temp-273.15)*10)/10);//把开氏度换算成摄氏度
-           }//for-j
-            //  //绘成图形
-             chart.load({
-             columns: [
-             window['arr'+cityCode]
-             ],
-             type: 'spline'
-             });//chart.load
-         cityCodes.push(cityCode);//储存城市号码
-         }//success
-     });//ajax 
+//   var cityCode=1808926;
+//       $.ajax({
+//          url:"//api.openweathermap.org/data/2.5/forecast?id=1808926&APPID=32785e8acc22078c162ee8aedd2307e1",
+//          dataType:"json",
+//          cache:"false",
+//          type:"GET",
+//          success:function(res){
+//          //填充数组
+//          window['arr'+cityCode]=[];
+//          window['arr'+cityCode].push('Hangzhou');
+//            for(var j=0;j<res.list.length;j++){
+//            window['arr'+cityCode].push((Math.floor(res.list[j].main.temp-273.15)*10)/10);//把开氏度换算成摄氏度
+//            }//for-j
+//             //  //绘成图形
+//              chart.load({
+//              columns: [
+//              window['arr'+cityCode]
+//              ],
+//              type: 'spline'
+//              });//chart.load
+//          cityCodes.push(cityCode);//储存城市号码
+//          }//success
+//      });//ajax 
 
-  $("#b01").click(function(){
-    //让首字母大写
-    var txt = document.getElementById("ipt").value.toString().toLowerCase().split("");
-    txt[0]=txt[0].toUpperCase();
-    txt=txt.join("");
-    //翻本地json
-         for(var i=0;i<cityList.length;i++){
-           if(cityList[i].name===txt){
-             var cityCode=cityList[i]._id;
-    //ajax拿数据
-    $.ajax({
-         url:"//api.openweathermap.org/data/2.5/forecast?id="+cityCode+"&APPID=32785e8acc22078c162ee8aedd2307e1",
-         dataType:"json",
-         cache:"false",
-         type:"GET",
-         success:function(res){
-         //  $("#myDiv").html(JSON.stringify(res));
-         //填充数组
-         //  var cityCodeString=String(cityCode);
-         window['arr'+cityCode]=[];
-         window['arr'+cityCode].push(txt);
-           for(var j=0;j<res.list.length;j++){
-           window['arr'+cityCode].push((Math.floor(res.list[j].main.temp-273.15)*10)/10);//把开氏度换算成摄氏度
-           }//for-j
-             //绘成图形
-             chart.load({
-             columns: [
-             window['arr'+cityCode]
-             ],
-             type: 'spline'
-             });//chart.load
-         cityCodes.push(cityCode);//储存城市号码
-         }//success
-     });//ajax            
-    };//if
-   };//for-i
-  })//click
+//   $("#b01").click(function(){
+//     //让首字母大写
+//     var txt = document.getElementById("ipt").value.toString().toLowerCase().split("");
+//     txt[0]=txt[0].toUpperCase();
+//     txt=txt.join("");
+//     //翻本地json
+//          for(var i=0;i<cityList.length;i++){
+//            if(cityList[i].name===txt){
+//              var cityCode=cityList[i]._id;
+//     //ajax拿数据
+//     $.ajax({
+//          url:"//api.openweathermap.org/data/2.5/forecast?id="+cityCode+"&APPID=32785e8acc22078c162ee8aedd2307e1",
+//          dataType:"json",
+//          cache:"false",
+//          type:"GET",
+//          success:function(res){
+//          //  $("#myDiv").html(JSON.stringify(res));
+//          //填充数组
+//          //  var cityCodeString=String(cityCode);
+//          window['arr'+cityCode]=[];
+//          window['arr'+cityCode].push(txt);
+//            for(var j=0;j<res.list.length;j++){
+//            window['arr'+cityCode].push((Math.floor(res.list[j].main.temp-273.15)*10)/10);//把开氏度换算成摄氏度
+//            }//for-j
+//              //绘成图形
+//              chart.load({
+//              columns: [
+//              window['arr'+cityCode]
+//              ],
+//              type: 'spline'
+//              });//chart.load
+//          cityCodes.push(cityCode);//储存城市号码
+//          }//success
+//      });//ajax            
+//     };//if
+//    };//for-i
+//   })//click
 
-  //清空
-    $("#b02").click(function(){
-      chart.unload();
-      cityCodes=[];
-    })
-   //面积步状图
-    $("#b03").click(function(){
-      for(var i=0;i<cityCodes.length;i++){
-        chart.load({
-        columns: [
-            window['arr'+cityCodes[i]]
-        ],
-        type: 'area-step'
-      })
-      }
-    })//b03
+//   //清空
+//     $("#b02").click(function(){
+//       chart.unload();
+//       cityCodes=[];
+//     })
+//    //面积步状图
+//     $("#b03").click(function(){
+//       for(var i=0;i<cityCodes.length;i++){
+//         chart.load({
+//         columns: [
+//             window['arr'+cityCodes[i]]
+//         ],
+//         type: 'area-step'
+//       })
+//       }
+//     })//b03
             
-    //曲线图
-    $("#b04").click(function(){
-      for(var i=0;i<cityCodes.length;i++){
-        chart.load({
-        columns: [
-            window['arr'+cityCodes[i]]
-        ],
-        type: 'spline'
-      })
-      }
-    })//b04
+//     //曲线图
+//     $("#b04").click(function(){
+//       for(var i=0;i<cityCodes.length;i++){
+//         chart.load({
+//         columns: [
+//             window['arr'+cityCodes[i]]
+//         ],
+//         type: 'spline'
+//       })
+//       }
+//     })//b04
 
-    //点状图
-    $("#b05").click(function(){
-      for(var i=0;i<cityCodes.length;i++){
-        chart.load({
-        columns: [
-            window['arr'+cityCodes[i]]
-        ],
-        type: 'scatter'
-      })
-      }
-    })//b05
+//     //点状图
+//     $("#b05").click(function(){
+//       for(var i=0;i<cityCodes.length;i++){
+//         chart.load({
+//         columns: [
+//             window['arr'+cityCodes[i]]
+//         ],
+//         type: 'scatter'
+//       })
+//       }
+//     })//b05
 
-        //柱状图
-    $("#b06").click(function(){
-      for(var i=0;i<cityCodes.length;i++){
-        chart.load({
-        columns: [
-            window['arr'+cityCodes[i]]
-        ],
-        type: 'bar'
-      })
-      }
-    })//b06
+//         //柱状图
+//     $("#b06").click(function(){
+//       for(var i=0;i<cityCodes.length;i++){
+//         chart.load({
+//         columns: [
+//             window['arr'+cityCodes[i]]
+//         ],
+//         type: 'bar'
+//       })
+//       }
+//     })//b06
 
-    //面积曲线图
-    $("#b07").click(function(){
-      for(var i=0;i<cityCodes.length;i++){
-        chart.load({
-        columns: [
-            window['arr'+cityCodes[i]]
-        ],
-        type: 'area-spline'
-      })
-      }
-    })//b07
+//     //面积曲线图
+//     $("#b07").click(function(){
+//       for(var i=0;i<cityCodes.length;i++){
+//         chart.load({
+//         columns: [
+//             window['arr'+cityCodes[i]]
+//         ],
+//         type: 'area-spline'
+//       })
+//       }
+//     })//b07
 
-    //测试按钮
-    $("#b08").click(function(){
-    chart.axis.labels({y: '摄氏度'});//有效
-    // chart.axis.labels({position: 'outer-middle'});//无效
-})
-  
-
+//     //测试按钮
+//     $("#b08").click(function(){
+//     chart.axis.labels({y: '摄氏度'});//有效
+//     // chart.axis.labels({position: 'outer-middle'});//无效
+// })
 </script>
 </html>
