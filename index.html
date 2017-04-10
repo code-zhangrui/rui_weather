@@ -181,14 +181,11 @@ a:hover{
          cityCodes.push(cityCode);//储存城市号码
         }//success
      });//ajax            
-    };//if
-   };//for-i
-   for(var i in cityList){
-      if(cityList.indexOf(txt)===-1){
+    }else if(cityList.indexOf(txt)===-1){
       alert("不存在此城市，请注意拼写！");
       return;
       };
-   }
+   };//for-i 
   })//click
 
   //清空
