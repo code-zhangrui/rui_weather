@@ -183,7 +183,9 @@ a:hover{
      });//ajax            
     };//if
     if(cityList.indexOf(txt)===-1){
-      alert("不存在此城市，请注意拼写！")
+      alert("不存在此城市，请注意拼写！");
+      return;
+
     };
    };//for-i
   })//click
