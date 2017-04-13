@@ -229,26 +229,12 @@ a:hover{
 
         //柱状图
     $("#b06").click(function(){
-      for(var i=0;i<cityCodes.length;i++){
-        chart.load({
-        columns: [
-            window['arr'+cityCodes[i]]
-        ],
-        type: 'bar'
-      })
-      }
+    chart.transform('bar');
     })//b06
 
     //面积曲线图
     $("#b07").click(function(){
-      for(var i=0;i<cityCodes.length;i++){
-        chart.load({
-        columns: [
-            window['arr'+cityCodes[i]]
-        ],
-        type: 'area-spline'
-      })
-      }
+    chart.transform('area-spline');
     })//b07
 
     //折线图
